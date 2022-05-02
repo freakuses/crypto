@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#define max 30
+
+int main()
+{
+    char msg[max], key[max], ch;
+    int m, n, i = 0, choice, flag = 0;
+    printf("\n--------------------Vigenere Cipher---------------------\n");
+    printf("Enter your message:- ");
+    gets(msg);
+    n = strlen(msg);
+    printf("Enter any string as a key:- ");
+    gets(key);
+    m = strlen(key);
+
+    while (i < n)
+    {
+        if (n != i)
+            key[i] = key[i % m]; //make a length of key == msg
+        i++;
+    }
+    key[i] = '\0';
+    printf("\nKey for Encryption:- %s", key);
+    strupr(msg);
+    strupr(key);
+    for (i = 0; i < n; i++)
+    {
+        msg[i] = msg[i] - 65;
+        key[i] = key[i] - 65;
+    }
+    do
+    {
+        printf("\n\t1. Encryption \t2. Decryption \t0. Exit");
+        printf("\n Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            for (i = 0; i < n; i++)
+            {
+                ch = (msg[i] + key[i]) % 26;
+                msg[i] = ch + 65;
+            }
+            msg[i] = '\0';
+            flag = 1;
+            printf("\nEncrypted Text:- %s\n", msg);
+            break;
+
+        case 2:
+            if (flag == 1)
+            {
+                for (i = 0; i < n; i++)
+                {
+                    msg[i] = msg[i] - 65;
+                    ch = (msg[i] - key[i]) % 26;
+                    if (ch < 0)
+                        ch = ch + 26; //making negative ch value positive0
+                    msg[i] = ch + 65;
+                }
+                msg[i] = '\0';
+                printf("\nDecrypted Text:- %s\n", strlwr(msg));
+            }
+            else
+                printf("\nAt first you need to do Encryption process :): !");
+            break;
+        case 0:
+            break;
+        default:
+            printf("Enter any valid option code.\n");
+            break;
+        }
+    } while (choice != 0);
+
+    return 0;
+}

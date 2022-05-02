@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+#define max 30
+
+int main()
+{
+    int i, j, k, x, key[3][3], sum = 0, n = 0, l = 0, y = 0;
+    char msg[max], CT[max], c_msg[3], ch;
+    printf("\n------------------Hill Cipher--------------------\n");
+    printf("Enter your message:- ");
+    gets(msg);
+    strupr(msg);
+    int len = strlen(msg);
+
+    // if msg length is not be multiple of 3
+    while ((len % 3) != 0)
+    {
+        msg[len] = 'X';
+        len++;
+    }
+    msg[len] = '\0';
+    printf("\n Plain Text after making multiple of 3: %s\n", msg);
+
+    printf("Enter key in 3X3 matrix form: \n");
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 3; j++)
+            scanf("%d", &key[i][j]);
+
+    for (i = 0; i < len; i++)
+        msg[i] -= 65;
+
+    for (i = 0; i < (len / 3); i++)
+    {
+        for (x = n; x < n + 3; x++)
+            c_msg[l++] = msg[x];
+        c_msg[x] = '\0';
+
+        for (j = 0; j < 3; j++)
+        {
+            for (k = 0; k < 3; k++)
+                sum = sum + c_msg[k] * key[k][j];
+            CT[y++] = sum % 26 + 65;
+            sum = 0;
+        }
+        CT[y] = '\0';
+        memset(c_msg, 0, 3);
+        n += 3;
+        l = 0;
+    }
+    printf("\nEncrypted message: %s", CT);
+
+    return 0;
+}

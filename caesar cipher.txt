@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#define max 255
+
+int main()
+{
+    char msg[max], ch;
+    int choice, key, flag = 0, i;
+
+    printf("\n--------------------Ceaser Cipher------------------------\n");
+    printf("Enter your messages here: ");
+    gets(msg);
+    strupr(msg);
+    printf("Your messages is:- \"%s\"", msg);
+    printf("\nEnter Key for encryption:- ");
+    scanf("%d", &key);
+
+    do
+    {
+        printf("\n\t1. Encryption \t2. Decryption \t0. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            for (i = 0; msg[i] != '\0'; i++)
+            {
+                ch = msg[i];
+                if (ch >= 'A' && ch <= 'Z')
+                    ch = (ch + key) % 90;
+                if (ch < 65)
+                    ch = ch + 64;
+                msg[i] = ch;
+            }
+            printf("Cipher Text:- %s\n", msg);
+            flag = 1;
+            break;
+
+        case 2:
+            if (flag == 1)
+            {
+                for (i = 0; msg[i] != '\0'; i++)
+                {
+                    ch = msg[i];
+                    if (ch >= 'A' && ch <= 'Z')
+                        ch = (ch - key) % 90;
+                    if (ch < 65)
+                        ch = ch + 26;
+                    msg[i] = ch;
+                }
+                printf("Plain Text:- %s\n", strlwr(msg));
+            }
+            else
+                printf("At first you need to perform Encryption process !\n");
+            break;
+
+        case 0:
+            break;
+
+        default:
+            printf("Enter any valid option :): !\n");
+            break;
+        }
+    } while (choice != 0);
+    return 0;
+}

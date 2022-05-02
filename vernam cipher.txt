@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char msg[30], key[30], ch;
+    int i;
+    printf("\n\t-------------------Vernam Cipher-------------------");
+    printf("\nEnter your message: ");
+    gets(msg);
+    printf("\nIt must be ~~~~~~length(keyword) == length(message)~~~~~~");
+    printf("\nKeyword for encryption: ");
+    gets(key);
+    strupr(msg);
+    strupr(key);
+    if (strlen(key) != strlen(msg))
+        printf("Please enter equal length of keyword with message.\n");
+    else
+    {
+        for (i = 0; msg[i] != '\0'; i++)
+        {
+            msg[i] = msg[i] - 65;
+            key[i] = key[i] - 65;
+            msg[i] = (msg[i] + key[i]) % 26 + 65; //formula: C = M xor K
+        }
+        msg[i] = '\0';
+        printf("\nEncrypted text: %s", msg);
+    }
+    return 0;
+}
